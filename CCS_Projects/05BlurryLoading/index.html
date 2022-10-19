@@ -6,7 +6,7 @@
     <title>blurry-loading</title>
 </head>
 <body>
-    <!-- <section class="bg"></section> -->
+    <section class="bg"></section>
     <span id="number" class="fontStyle">0%</span>
 </body>
 </html>
@@ -20,8 +20,8 @@
                 return;
             }
             // 改变文字透明度
-            debugger
-            document.getElementsByTagName('body')[0].style.filter = `opacity(${100 - count}%)`
+            document.getElementsByTagName('span')[0].style.filter = `opacity(${98 - count}%)`
+            document.getElementsByTagName('section')[0].style.filter = `blur(${98 - count}px)`
             count++;
             document.getElementById('number').innerHTML = count + '%';
         }, 50)
@@ -29,15 +29,24 @@
 </script>
 <style>
     body {
+        margin: 0;
+        padding: 0;
+    }
+    .bg {
         background-image: url("./background.avif");
-        background-size: 100% auto;   
+        position: fixed;
+        top: -190px;
+        bottom: -10px;
+        left: -350px;
+        right: -10px;
+        filter: blur(0px);
     }
     .fontStyle {
         font-size: 3rem;
         font-family: Arial, Helvetica, sans-serif;
         font-weight: 900;
         color: azure;
-        position: relative;
+        position: absolute;
         left: 50vw;
         top: 50vh;
     }
