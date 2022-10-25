@@ -130,4 +130,4 @@ background-size: 100% auto;
 ### 为什么用width的100%不行，但是用width的100vw可以；
 
 # knowledge
-## CSS background-image 
+## CSS background-image

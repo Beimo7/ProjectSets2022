@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IncrementingCounter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="container">
+        <div class="counter">
+            <i class="fab fa-twitter fa-3x"></i>
+            <span id="num1">followers</span>
+            <p>Twitter Followers</p>
+        </div>
+        <div class="counter">
+            <i class="fab fa-youtube fa-3x"></i>
+            <span id="num2">subscribers</span>
+            <p>YouTube Subscribers</p>
+        </div>
+        <div class="counter">
+            <i class="fab fa-facebook fa-3x"></i>
+            <span id="num3">fans</span>
+            <p>Facebook Fans</p>
+        </div>
+    </div>
+</body>
+<script>
+    let followers = 0
+    let subscribers = 0
+    let fans = 0
+    let target = [12000, 5000, 7500]
+    let speed = 50
+    window.onload = () => {
+        let timeCount = window.setInterval(() => {
+            document.getElementById('num1').innerHTML = followers
+            document.getElementById('num2').innerHTML = subscribers
+            document.getElementById('num3').innerHTML = fans
+            followers += target[0] / speed
+            subscribers += target[1] / speed
+            fans += target[2] / speed
+            if (followers > target[0] || subscribers > target[1] || fans > target[2]) {
+                window.clearInterval(timeCount)
+            }
+        }, speed)
+    }
+</script>
+</html>
+<style>
+body {
+    background-color: rgb(142, 68, 173);
+    margin: 0;
+    padding: 0;
+}
+.container {
+    color: seashell;
+    text-align: center;
+    position: relative;
+    top: 40vh;
+    width: 100%;
+}
+.counter {
+    display: inline-block;
+    width: 20vw;
+    height: 20vh;
+}
+.counter i {
+    display: block;
+}
+.counter span {
+    display: block;
+    font-size: 70px;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+.counter p {
+    display: block;
+}
+</style>
