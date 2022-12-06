@@ -1,6 +1,6 @@
 <template>
-  <div class="index">首页
-    <p>首页</p>
+  <div class="index">
+    <el-button type="primary">按钮测试</el-button>
   </div>
 </template>
 <script>

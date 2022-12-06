@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    // 定义数组的方式 1；
+    // 先定义，后赋值
+    var arr = new Array()
+    for (let i = 0; i < 5; i++) {
+        arr[i] = i
+    }
+    console.log('arr', arr)
+    // 定义数组的方式2 ：
+    // 定义的时候赋值
+    var arr2 = new Array(1, 2, 3, 4, 5)
+    console.log('arr2', arr2)
+    // concat
+    // var arr3 = concat(arr, arr2)
+    // console.log(arr3)
+    // var fruits = ['apple', 'banana', 'peat']
+    // fruits.splice(2, 1, 'lemon', 'Kiwi')
+    // console.log(fruits)
+
+    var fruits = ["Banana", "Orange", "Lemon", "Apple", "Mango"];
+    var citrus = fruits.slice(1); 
+    console.log(citrus)
+</script>
