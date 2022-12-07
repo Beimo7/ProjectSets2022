@@ -20,6 +20,12 @@ const routes = [
         name: 'about',
         component: () => import('../views/about/index.vue')
     },
+    // {
+    //   // path: '*', // 如果没有找到路由，都会跳转到这个路径下
+    //   path: './catchAll(.*)',
+    //   name: '404',
+    //   component: () => import('../views/error_pages/404.vue')
+    // }
 ]
 
 const router = createRouter({

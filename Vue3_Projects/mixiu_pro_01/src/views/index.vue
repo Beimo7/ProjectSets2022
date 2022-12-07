@@ -1,14 +1,16 @@
 <template>
   <div class="index">
-    <el-button type="primary">按钮测试</el-button>
+    <Tree></Tree>
   </div>
 </template>
 <script>
+import Tree from '../components/Tree.vue'
 export default {
   name: 'Index',
-  components: {},
+  components: {
+    Tree,
+  },
   mounted() {
-    console.log('!!!')
   }
 };
 </script>
