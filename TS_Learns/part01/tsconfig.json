@@ -1,0 +1,78 @@
+{
+  /*
+    tsconfig.json是ts编译器的配置文件，ts根据它来进行编译配置
+  */
+
+  /*
+    "include" 用来表示指定哪些ts文件需要被编译
+    路径： ** 表示任意目录
+            * 表示任意文件
+  */
+  "include": [
+    "./src/**/*"
+  ],
+  /*
+    "exclude" 不需要被编译的文件目录
+       默认值：["node_modules", "bower_components", "jspm_packages"]
+  */
+  "exclude": [
+    "src/hello/**/*"
+  ],
+  /*
+    "extends" 定义被继承的配置文件
+    下述实例中，当前配置文件中会自动包含config.json中的所有配置信息
+    */
+  "extends": "./src/config.json",
+  /*
+    "files" 指定被编译文件列表，只有需要编译的文件少时才会用到
+  */
+  "files": [
+    "./src/greeter.ts",
+    "./src/customer.ts"
+  ],
+  /*
+    "compilerOptions"  编译选项
+  */
+  "compilerOptions": {
+    // target 用来指定ts被编译为ES的版本
+    // "target": "ES6",
+    // "target": "ES2015",
+    "target": "ESNext",  //最新版本的ES
+    // module  指定要使用的模块化的规范
+    // "module": "ES2015",
+    "module": "system",
+    // lib 用来指定项目中要使用的库
+    // "lib": [
+    //   "DOM"
+    // ]
+    // outDir 指定编译后文件所在的目录
+    "outDir": "./dist",
+    //outFile 将编译后的代码合并为一个文件
+    // 设置outFile 之后，将所有全局作用域中的代码会合并到同一个文件中
+    // "outFile": "./dist/app.js",
+    // allowJs 是否对js文件进行编译，默认是false
+    "allowJs": true,
+    // checkJs  是否检查JS代码是否符合语法规范，默认是false
+    "checkJs": true,
+    // removeComments 是否移除注释
+    "removeComments": true,
+    // noEmit  不生成编译后的文件，默认为false
+    "noEmit": false,
+    // noEmitOnError 当有错误的时候，不生成编译后的文件
+    // 避免错误代码 生成到dist目录中
+    "noEmitOnError": false,
+
+    /*
+      语法检查相关的属性
+    */
+    // alwaysStrict 用来设置编译后的文件是否使用严格模式，默认false
+    // 可以在js文件最开始加上  "use strict" ，表示开启js的严格模式
+    // 当js文件中有export | import，默认进入严格模式，不会在开头加 use strict
+    "alwaysStrict": true,
+    // noImplicitAny 用于检查隐式any
+    // 显式any  let a : nay = 45
+    // 隐式any  function fn(a, b) { return a + b }
+    // 一旦出现any，ts文件中所有类型检查都失效
+    "noImplicitAny": true,
+  }
+}
