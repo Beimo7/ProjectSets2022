@@ -92,7 +92,7 @@
     </el-row>
     <el-row>
       <el-col :span="10" :offset="7">
-        <el-checkbox class="checkbox-btn"></el-checkbox>
+        <el-checkbox class="checkbox-btn" v-model="agree"></el-checkbox>
         <span
           >{{ " " }}我已阅读并同意<a>《语雀服务协议》</a>和<a
             >《语雀隐私权政策》</a
@@ -140,6 +140,7 @@ let changeFlag: boolean = false;
 let tempStr: string = "";
 let btnContent = ref("登录/注册");
 let password = ref("");
+let agree = ref(false)
 const instance = getCurrentInstance();
 function updateSelect(value: any) {
   changeFlag = !changeFlag;
@@ -161,6 +162,14 @@ function changeView() {
     password.value = tempStr;
   }
   isView.value = !isView.value;
+}
+// 登录
+// 如果用户没有勾选服务，则弹窗勾选
+function register() {
+  // 如果用户没有勾选服务，则弹窗勾选
+  if (!agree) {
+    
+  }
 }
 // 监听password 的变化，将其赋值给 info.password
 watch(password, (newVal, oldVal) => {
