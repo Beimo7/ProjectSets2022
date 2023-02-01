@@ -13,7 +13,8 @@ let info = reactive({
   phone: '',
   checked: false,
   type: 0,
-  password: ''
+  password: '',
+  verify: ''
 })
 export default info
 

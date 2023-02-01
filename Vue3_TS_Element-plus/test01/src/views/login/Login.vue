@@ -2,31 +2,34 @@
   <div class="header">
     <img class="header-img" src="../../assets/login-original.svg" />
   </div>
+  <el-form v-model="info" ref="formRef" :rules="rules">
   <div>
-    <el-row>
-      <el-col :span="10" :offset="7">
-        <el-input v-model="phone" size="large">
-          <template #prepend>
-            <el-select
-              :key="changeFlag"
-              @change="updateSelect"
-              v-model="area"
-              size="large"
-              style="width: 10vw"
-            >
-              <el-option
-                v-for="(item, index) in phoneAreaArray"
-                :key="index"
-                :label="item.label"
-                :value="item.value"
+      <el-row>
+        <el-col :span="10" :offset="7">
+          <el-form-item label="" prop="phone">
+          <el-input v-model="info.phone" placeholder="请输入手机号" size="large">
+            <template #prepend>
+              <el-select
+                :key="changeFlag"
+                @change="updateSelect"
+                v-model="area"
+                size="large"
+                style="width: 10vw"
               >
-              </el-option>
-            </el-select>
-          </template>
-        </el-input>
-      </el-col>
-    </el-row>
-  </div>
+                <el-option
+                  v-for="(item, index) in phoneAreaArray"
+                  :key="index"
+                  :label="item.label"
+                  :value="item.value"
+                >
+                </el-option>
+              </el-select>
+            </template>
+          </el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+  </div>  
   <div class="container-isPwd-N">
     <div v-if="info.type === 0" class="isPwd-N">
       <el-row>
@@ -36,6 +39,7 @@
           :offset="7"
           style="margin-top: 3vh; margin-bottom: 1.5vh"
         >
+        <el-form-item label="" prop="verify">
           <el-input
             placeholder="6位短信验证码"
             style="width: 20vw; margin-right: 0.5vw"
@@ -43,15 +47,17 @@
             size="large"
           ></el-input>
           <el-button size="large" @click="getVerifyCode">获取验证码</el-button>
+          </el-form-item>
         </el-col>
       </el-row>
     </div>
     <div v-else class="isPwd-Y">
       <el-row>
         <el-col :span="10" :offset="7">
+          <el-form-item>
           <el-input
             size="large"
-            v-model="password"
+            v-model="info.password"
             placeholder="请输入密码"
             style="margin-top: 3vh"
           >
@@ -64,6 +70,7 @@
               ></el-button>
             </template>
           </el-input>
+          </el-form-item>
         </el-col>
       </el-row>
       <el-row>
@@ -78,11 +85,12 @@
       </el-row>
     </div>
   </div>
+  </el-form>
   <div>
     <el-row>
       <el-col class="login-btn" :span="10" :offset="7" style="margin-top: 3vh">
         <el-button
-          :disabled="!info.verify && !info.password"
+          :disabled="!info.phone || !info.verify && !info.password"
           style="width: 100%"
           @click="register"
           size="large"
@@ -127,12 +135,30 @@
       </el-col>
     </el-row>
   </div>
+  <Dialog
+    :dialogVisible="dialogVisible"
+    dialogTitle="服务协议及隐私保护"
+    dialogWidth="50%"
+    :dialogShowclose="false"
+    noContent="不同意"
+    yesContent="同意"
+    :noFun="noFun"
+    :yesFun="yesFun"
+  >
+    <span
+      >为更好地保护你的合法权益，请阅读并同意
+      <a href="">《语雀服务协议》</a>
+      和
+      <a href="">《语雀隐私权政策》</a>
+    </span>
+  </Dialog>
 </template>
 <script setup lang="ts">
-import { getCurrentInstance, ref, watch } from "vue";
+import { callWithErrorHandling, getCurrentInstance, reactive, ref, watch } from "vue";
 import { Message, View, Hide } from "@element-plus/icons-vue";
 import phoneAreaArray from "../../enum/phone";
 import info from "../../enum/info";
+import Dialog from "../../components/Dialog.vue";
 let area = ref("+86");
 let phone = ref();
 let isView = ref(false);
@@ -140,8 +166,67 @@ let changeFlag: boolean = false;
 let tempStr: string = "";
 let btnContent = ref("登录/注册");
 let password = ref("");
-let agree = ref(false)
+let agree = ref(false);
+let dialogVisible = ref(false);
 const instance = getCurrentInstance();
+// 手机号校验
+const validatePhone = (rule: any, value: any, callback: any) => {
+  let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/
+  value = info.phone
+  if (!value) {
+    return callback(new Error('请输入手机号'))
+  }
+  else {
+    if(value.length <= 10 && !reg.test(value)) {
+      return callback(new Error('请输入合理的手机号'))
+    }
+    else {
+      return callback()
+    }
+  }
+}
+// 短信号校验
+const validateVerify = (rule: any, value: any, callback: any) => {
+  let reg = /^[0-9]\d{6}$/
+  value = info.verify
+  if (info.type === 0) {
+    if (!value) {
+      return callback(new Error('请输入短信验证码'))
+    }
+    else {
+      if (value.length < 6 && !reg.test(value)) {
+        return callback(new Error('请输入正确的短信验证码'))
+      }
+      else {
+        return callback()
+      }
+    }
+  }
+}
+// 密码校验
+const validatePassword = (rule: any, value: any, callback: any) => {
+  let reg = /^/
+  value = info.password
+  if (info.type === 1) {
+    if (!value) {
+      return callback(new Error('请输入密码'))
+    }
+    else {
+      if (value.length < 6) {
+        return callback(new Error('请输入多于6位的密码'))
+      }
+      else {
+        return callback()
+      }
+    }
+  }
+}
+// 表单校验规则
+const rules = reactive({
+  phone: [{ validator: validatePhone, trigger: 'blur'}],
+  verify: [{validator: validateVerify, trigger: 'blur'}],
+  password: [{validator: validatePassword, trigger: 'blur'}]
+})
 function updateSelect(value: any) {
   changeFlag = !changeFlag;
 }
@@ -164,12 +249,19 @@ function changeView() {
   isView.value = !isView.value;
 }
 // 登录
-// 如果用户没有勾选服务，则弹窗勾选
 function register() {
   // 如果用户没有勾选服务，则弹窗勾选
-  if (!agree) {
-    
+  if (!agree.value) {
+    dialogVisible.value = true;
   }
+}
+// 关闭弹窗
+function noFun() {
+  dialogVisible.value = false;
+}
+function yesFun() {
+  dialogVisible.value = false;
+  agree.value = true;
 }
 // 监听password 的变化，将其赋值给 info.password
 watch(password, (newVal, oldVal) => {
