@@ -47,17 +47,33 @@ for (let k = 0; k < Math.random() * 10; k++) {
   tree.push(treeNode)
 }
 
-console.log({tree})
 
+// 生成table数据
+let table = []
+for (let i = 0; i < Math.random() * 100; i++) {
+  let rowData = Mock.mock({
+    id: '@id()',
+    name: '@cname()',
+    code: /^1[34578]\d{9}$/,
+    date: '@date()',
+    email: '@email()'
+  })
+  table.push(rowData)
+}
 
-
-
-
-
+// 树组件 数据
 Mock.mock('/deep/tree', 'get', () => {
   return {
     status: 0,
     data: tree
+  }
+})
+
+// 表格数据
+Mock.mock('/deep/table', 'get', () =>{
+  return {
+    status: 0,
+    data: table
   }
 })
 export default []

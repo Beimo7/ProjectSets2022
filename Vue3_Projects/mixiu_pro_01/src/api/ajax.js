@@ -9,5 +9,11 @@ export default {
       method: "get"
     });
   },
-  
+  // 获取表格数据
+  getTable() {
+    return http({
+      url: `/deep/table`,
+      method: 'get'
+    });
+  }
 }

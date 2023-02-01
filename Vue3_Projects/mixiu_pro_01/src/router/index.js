@@ -20,6 +20,11 @@ const routes = [
         name: 'about',
         component: () => import('../views/about/index.vue')
     },
+    {
+      path: '/menu',
+      name: 'menu',
+      component: () => import('../views/menu/index.vue')
+    }
     // {
     //   // path: '*', // 如果没有找到路由，都会跳转到这个路径下
     //   path: './catchAll(.*)',

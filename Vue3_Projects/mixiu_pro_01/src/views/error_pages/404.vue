@@ -3,8 +3,5 @@
     <img src="src/assets/images/error/404.gif" alt="" />
   </div>
 </template>
-<script>
-export default {
-  name: 'Error'
-}
+<script setup>
 </script>
