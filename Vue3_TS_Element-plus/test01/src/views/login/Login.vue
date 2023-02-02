@@ -3,94 +3,100 @@
     <img class="header-img" src="../../assets/login-original.svg" />
   </div>
   <el-form v-model="info" ref="formRef" :rules="rules">
-  <div>
+    <div>
       <el-row>
         <el-col :span="10" :offset="7">
           <el-form-item label="" prop="phone">
-          <el-input v-model="info.phone" placeholder="请输入手机号" size="large">
-            <template #prepend>
-              <el-select
-                :key="changeFlag"
-                @change="updateSelect"
-                v-model="area"
-                size="large"
-                style="width: 10vw"
-              >
-                <el-option
-                  v-for="(item, index) in phoneAreaArray"
-                  :key="index"
-                  :label="item.label"
-                  :value="item.value"
+            <el-input
+              v-model="info.phone"
+              placeholder="请输入手机号"
+              size="large"
+            >
+              <template #prepend>
+                <el-select
+                  :key="changeFlag"
+                  @change="updateSelect"
+                  v-model="area"
+                  size="large"
+                  style="width: 10vw"
                 >
-                </el-option>
-              </el-select>
-            </template>
-          </el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-  </div>  
-  <div class="container-isPwd-N">
-    <div v-if="info.type === 0" class="isPwd-N">
-      <el-row>
-        <el-col
-          class="verify-btn"
-          :span="10"
-          :offset="7"
-          style="margin-top: 3vh; margin-bottom: 1.5vh"
-        >
-        <el-form-item label="" prop="verify">
-          <el-input
-            placeholder="6位短信验证码"
-            style="width: 20vw; margin-right: 0.5vw"
-            v-model="info.verify"
-            size="large"
-          ></el-input>
-          <el-button size="large" @click="getVerifyCode">获取验证码</el-button>
+                  <el-option
+                    v-for="(item, index) in phoneAreaArray"
+                    :key="index"
+                    :label="item.label"
+                    :value="item.value"
+                  >
+                  </el-option>
+                </el-select>
+              </template>
+            </el-input>
           </el-form-item>
         </el-col>
       </el-row>
     </div>
-    <div v-else class="isPwd-Y">
-      <el-row>
-        <el-col :span="10" :offset="7">
-          <el-form-item>
-          <el-input
-            size="large"
-            v-model="info.password"
-            placeholder="请输入密码"
-            style="margin-top: 3vh"
+    <div class="container-isPwd-N">
+      <div v-if="info.type === 0" class="isPwd-N">
+        <el-row>
+          <el-col
+            class="verify-btn"
+            :span="10"
+            :offset="7"
+            style="margin-top: 3vh; margin-bottom: 1.5vh"
           >
-            <template #append>
-              <el-button round v-if="isView" @click="changeView"
-                ><el-icon size="18"><View /></el-icon
-              ></el-button>
-              <el-button round v-else @click="changeView"
-                ><el-icon size="18"><Hide /></el-icon
-              ></el-button>
-            </template>
-          </el-input>
-          </el-form-item>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col
-          class="forget-btn"
-          :span="10"
-          :offset="7"
-          style="margin-top: 0.5vh"
-        >
-          <el-button text>忘记密码?</el-button>
-        </el-col>
-      </el-row>
+            <el-form-item label="" prop="verify">
+              <el-input
+                placeholder="6位短信验证码"
+                style="width: 20vw; margin-right: 0.5vw"
+                v-model="info.verify"
+                size="large"
+              ></el-input>
+              <el-button size="large" @click="getVerifyCode"
+                >获取验证码</el-button
+              >  
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </div>
+      <div v-else class="isPwd-Y">
+        <el-row>
+          <el-col :span="10" :offset="7">
+            <el-form-item>
+              <el-input
+                size="large"
+                v-model="info.password"
+                placeholder="请输入密码"
+                style="margin-top: 3vh"
+              >
+                <template #append>
+                  <el-button round v-if="isView" @click="changeView"
+                    ><el-icon size="18"><View /></el-icon
+                  ></el-button>
+                  <el-button round v-else @click="changeView"
+                    ><el-icon size="18"><Hide /></el-icon
+                  ></el-button>
+                </template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col
+            class="forget-btn"
+            :span="10"
+            :offset="7"
+            style="margin-top: 0.5vh"
+          >
+            <el-button text>忘记密码?</el-button>
+          </el-col>
+        </el-row>
+      </div>
     </div>
-  </div>
   </el-form>
   <div>
     <el-row>
       <el-col class="login-btn" :span="10" :offset="7" style="margin-top: 3vh">
         <el-button
-          :disabled="!info.phone || !info.verify && !info.password"
+          :disabled="!info.phone || (!info.verify && !info.password)"
           style="width: 100%"
           @click="register"
           size="large"
@@ -154,11 +160,20 @@
   </Dialog>
 </template>
 <script setup lang="ts">
-import { callWithErrorHandling, getCurrentInstance, reactive, ref, watch } from "vue";
+import {
+  callWithErrorHandling,
+  getCurrentInstance,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+} from "vue";
 import { Message, View, Hide } from "@element-plus/icons-vue";
 import phoneAreaArray from "../../enum/phone";
 import info from "../../enum/info";
 import Dialog from "../../components/Dialog.vue";
+import router from "../../router";
+import { routerKey } from "vue-router";
 let area = ref("+86");
 let phone = ref();
 let isView = ref(false);
@@ -168,65 +183,61 @@ let btnContent = ref("登录/注册");
 let password = ref("");
 let agree = ref(false);
 let dialogVisible = ref(false);
+// 为获取表单元素
+const formRef = ref<any>(null);
 const instance = getCurrentInstance();
 // 手机号校验
 const validatePhone = (rule: any, value: any, callback: any) => {
-  let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/
-  value = info.phone
+  let reg = /^1[3|4|5|6|7|8|9][0-9]\d{8}$/;
+  value = info.phone;
   if (!value) {
-    return callback(new Error('请输入手机号'))
-  }
-  else {
-    if(value.length <= 10 && !reg.test(value)) {
-      return callback(new Error('请输入合理的手机号'))
-    }
-    else {
-      return callback()
+    return callback(new Error("请输入手机号"));
+  } else {
+    if (value.length <= 10 && !reg.test(value)) {
+      return callback(new Error("请输入合理的手机号"));
+    } else {
+      return callback();
     }
   }
-}
+};
 // 短信号校验
 const validateVerify = (rule: any, value: any, callback: any) => {
-  let reg = /^[0-9]\d{6}$/
-  value = info.verify
+  let reg = /^[0-9]\d{6}$/;
+  value = info.verify;
   if (info.type === 0) {
     if (!value) {
-      return callback(new Error('请输入短信验证码'))
-    }
-    else {
+      return callback(new Error("请输入短信验证码"));
+    } else {
       if (value.length < 6 && !reg.test(value)) {
-        return callback(new Error('请输入正确的短信验证码'))
-      }
-      else {
-        return callback()
+        return callback(new Error("请输入正确的短信验证码"));
+      } else {
+        return callback();
       }
     }
   }
-}
+};
 // 密码校验
 const validatePassword = (rule: any, value: any, callback: any) => {
-  let reg = /^/
-  value = info.password
+  let reg = /^/;
+  value = info.password;
   if (info.type === 1) {
     if (!value) {
-      return callback(new Error('请输入密码'))
-    }
-    else {
+      return callback(new Error("请输入密码"));
+    } else {
       if (value.length < 6) {
-        return callback(new Error('请输入多于6位的密码'))
-      }
-      else {
-        return callback()
+        return callback(new Error("请输入多于6位的密码"));
+      } else {
+        return callback();
       }
     }
   }
-}
+};
 // 表单校验规则
 const rules = reactive({
-  phone: [{ validator: validatePhone, trigger: 'blur'}],
-  verify: [{validator: validateVerify, trigger: 'blur'}],
-  password: [{validator: validatePassword, trigger: 'blur'}]
-})
+  phone: [{ validator: validatePhone, trigger: "blur" }],
+  verify: [{ validator: validateVerify, trigger: "blur" }],
+  password: [{ validator: validatePassword, trigger: "blur" }],
+});
 function updateSelect(value: any) {
   changeFlag = !changeFlag;
 }
@@ -253,6 +264,13 @@ function register() {
   // 如果用户没有勾选服务，则弹窗勾选
   if (!agree.value) {
     dialogVisible.value = true;
+  } else {
+    formRef.value.validate((valid: Boolean) => {
+      // 校验通过
+      if (valid) {
+        router.push("/price");
+      }
+    });
   }
 }
 // 关闭弹窗
@@ -262,6 +280,23 @@ function noFun() {
 function yesFun() {
   dialogVisible.value = false;
   agree.value = true;
+  // 进行登陆密码校验
+  debugger;
+  formRef.value.validate(valid => {
+    debugger
+    // 校验通过
+    if (valid) {
+      debugger;
+      // 将密码存储到locaStorage
+      localStorage.setItem('phone', info.phone)
+      localStorage.setItem('type', info.type + '')
+      localStorage.setItem('password', info.password)
+      localStorage.setItem('verify', info.verify)
+      router.push("/price");
+    } else {
+      debugger;
+    }
+  });
 }
 // 监听password 的变化，将其赋值给 info.password
 watch(password, (newVal, oldVal) => {

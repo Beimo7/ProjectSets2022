@@ -12,17 +12,8 @@ function update() {
   // 创建的bindPhone设置id为quote
   bindPhone.setAttribute('id', 'quote')
   // 将创建的div添加到body后
-  body.appendChild(bindPhone)
+  // body.appendChild(bindPhone)
   // return 一个新的vue实例并且将实例挂载到刚创建的DOM节点上
-  return new Vue({
-    render: (h) => {
-      input, {
-        props: {
-          content: 
-        }
-      }
-    }
-  }).$mount('#quote')
 }
 interface rightType {
   type: number;
