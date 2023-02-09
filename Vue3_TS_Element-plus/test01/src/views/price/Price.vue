@@ -1,10 +1,12 @@
 <template>
   <h2>这是定价页面</h2>
   <el-button @click="update">添加高亮块</el-button>
+  <full-screen></full-screen>
 </template>
 <script setup lang="ts">
 import Vue from 'vue'
 import Quote from '../../components/Quote.vue'
+import FullScreen from '../../components/FullScreen.vue'
 function update() {
   // 获取body，创建一个新的div节点
   let body = document.body

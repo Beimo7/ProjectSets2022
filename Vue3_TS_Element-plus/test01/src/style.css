@@ -1,3 +1,9 @@
+/* 我的样式 */
+body {
+background:linear-gradient(90deg,rgba(196,244,88,0.2969) 0%,rgba(255, 255, 255, 0.297) 52%,rgba(61,213,128,0.2969) 100%);
+/* opacity:0.2969; */
+}
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
