@@ -1,6 +1,8 @@
 <template>
   <div class="header">
     <img class="header-img" src="../../assets/login-original.svg" />
+    <el-icon><Message/></el-icon>
+  <el-icon><View/></el-icon>
   </div>
   <el-form :model="info" ref="formRef" :rules="rules">
     <div>
@@ -169,7 +171,7 @@ import {
   ref,
   watch,
 } from "vue";
-import { Message, View, Hide } from "@element-plus/icons-vue";
+// import { Message, View, Hide } from "@element-plus/icons-vue";
 import phoneAreaArray from "../../enum/phone";
 import info from "../../enum/info";
 import Dialog from "../../components/Dialog.vue";

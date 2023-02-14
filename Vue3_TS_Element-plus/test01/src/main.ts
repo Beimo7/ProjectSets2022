@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import headerBar from './components/HeadBar.vue'
 import App from './App.vue'
 import './style.css'
 import ElementPlus from 'element-plus'
@@ -10,12 +11,16 @@ import {store} from './store/index'
 
 const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+  console.log({key})
+  console.log({component})
   app.component(key, component)
 }
+app.component('HeadBar', headerBar)
 // app.use(VueI18n)
 app.use(ElementPlus)
 app.use(router)
 app.use(store)
+debugger
 app.mount('#app')
 
 
