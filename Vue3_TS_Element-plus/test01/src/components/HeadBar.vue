@@ -8,7 +8,7 @@
       <el-button text>数据安全</el-button>
       <el-button text>公益计划</el-button>
       <el-button text>关于我们</el-button>
-      <el-button text>下载</el-button>
+      <el-button text @click="turnToDownload">下载</el-button>
       <el-button text @click="turnToPrice">定价</el-button>
       <el-button text @click="turnToHelp">帮助</el-button>
       <el-button @click="turnToLogin" color="rgb(0, 185, 107)" style="margin-left: 5vw">登录/注册</el-button>
@@ -31,6 +31,9 @@
   }
   function turnToHelp() {
     router.push('./help')
+  }
+  function turnToDownload() {
+    router.push('./download')
   }
 </script>
 <style scoped>

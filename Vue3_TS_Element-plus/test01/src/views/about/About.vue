@@ -9,7 +9,7 @@
       <el-button text>数据安全</el-button>
       <el-button text>公益计划</el-button>
       <el-button text>关于我们</el-button>
-      <el-button text>下载</el-button>
+      <el-button text @click="turnToDownload">下载</el-button>
       <el-button text @click="turnToPrice">定价</el-button>
       <el-button text @click="turnToHelp">帮助</el-button>
       <el-button @click="turnToLogin" color="rgb(0, 185, 107)" style="margin-left: 5vw">登录/注册</el-button>
@@ -28,6 +28,8 @@
       <h2>每一个人，都能构建知识体系</h2>
       <p>收集与记录是知识管理的起点</p>
       <p>知识管理还需要整理与输出</p>
+      <p style="font-size: 10px">测试</p>
+      <p style="font-size: 0.5rem">测试</p>
     </div>
     <div class="footer-personal-img">
       <img src="../../assets/footer-personal-arrow.png" />
@@ -40,6 +42,10 @@
 </template>
 <script setup lang="ts">
   import { useRouter } from 'vue-router'
+  for (let i = 0; i < 10; i ++) {
+    let i = 'abc'
+    console.log(i)
+  }
   const router = useRouter()
   // 跳转到定价页面
   function turnToPrice() {
@@ -50,6 +56,9 @@
   }
   function turnToHelp() {
     router.push('./help')
+  }
+  function turnToDownload() {
+    router.push('./download')
   }
 </script>
 <style scoped>

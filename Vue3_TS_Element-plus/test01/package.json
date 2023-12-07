@@ -7,23 +7,37 @@
     "dev": "vite",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest --run"
   },
   "dependencies": {
+    "@antv/g6": "^4.8.8",
+    "@apollo/client": "^3.7.10",
+    "@balkangraph/orgchart.js": "^8.10.6",
     "@element-plus/icons-vue": "^2.0.10",
+    "@fullcalendar/core": "^6.1.9",
+    "@fullcalendar/daygrid": "^6.1.9",
+    "@fullcalendar/interaction": "^6.1.9",
+    "@fullcalendar/timegrid": "^6.1.9",
+    "@fullcalendar/vue3": "^6.1.9",
     "@types/js-cookie": "^3.0.2",
     "echarts": "^5.4.1",
     "element-plus": "^2.2.28",
+    "graphql": "^16.6.0",
+    "html2canvas": "^1.4.1",
+    "pinia": "^2.0.33",
+    "vis-network": "^9.1.6",
     "vue": "^3.2.45",
+    "vue-grid-layout": "^3.0.0-beta1",
     "vue-i18n": "^9.2.2",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vue3-tree-org": "^4.2.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.0.0",
+    "sass": "^1.58.0",
     "typescript": "^4.9.3",
     "vite": "^4.0.0",
     "vitest": "^0.28.4",
-    "vue-tsc": "^1.0.11",
-    "sass": "^1.58.0"
+    "vue-tsc": "^1.0.11"
   }
 }
